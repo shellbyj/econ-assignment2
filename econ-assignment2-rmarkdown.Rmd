@@ -1,0 +1,85 @@
+---
+title: "econ-assignment2"
+author: "Jessica Jagdeo"
+date: "April 22, 2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r, include = FALSE}
+
+library(tidyverse)
+
+gas <- read_csv("Gas_Data.csv")
+```
+
+If we’re going to use linear regression, we should have reason to think that a linear relationship exists between variables.
+
+```{r}
+
+gaslow_scatter <- ggplot(gas, aes(x = Q_Low_Gallons_per_Day, y = Price_Dollars)) +
+  geom_point()
+
+gaslow_scatter
+
+gashigh_scatter <- ggplot(gas, aes(x = Q_High_Gallons_per_Day, y = Price_Dollars)) +
+  geom_point()
+
+gashigh_scatter
+
+#The data display very rough linear relationships
+
+```
+
+```{r}
+
+# The general syntax for linear regression in R is: model_name <- lm(y_variable ~ x_variable, data = df_name)
+
+gaslow_model <- lm(Price_Dollars ~ Q_Low_Gallons_per_Day, data = gas)
+
+gaslow_model
+
+#Low Gas Price = 21.991 - 0.0001355(Q_Low_Gallons_per_Day)
+
+gashigh_model <- lm(Price_Dollars ~ Q_High_Gallons_per_Day, data = gas)
+
+gashigh_model
+
+#High Gas Price = 23.391 - 0.0001297(Q_High_Gallons_per_Day)
+
+# In the context of this model, the slope means that for every gallon of gas, there is a decrease in the willingness to pay.
+
+```
+
+```{r}
+
+par(mfrow = c(2,2))
+
+plot(gaslow_model)
+
+```
+```{r}
+
+summary(gaslow_model)
+
+# Coefficient of determination R^2: 0.705. Quantity of gas significantly predicts price, according to this model. 
+
+# 71% of variance in gas prices is explained by the quantity.
+
+```
+
+```{r}
+
+gas_graph <- ggplot(gas, aes(x = Price_Dollars, y = Q_Low_Gallons_per_Day)) +
+geom_point() +
+geom_smooth(method = lm, se = TRUE, size = 0.5, color = "gray20") +
+theme_bw() +
+labs(x = "Quantity", y = "Price")
+
+gas_graph
+
+```
+
