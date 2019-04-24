@@ -83,3 +83,20 @@ gas_graph
 
 ```
 
+```{r}
+
+# To create the supply curve, we must find the equation for the line. We can do so because we know the curve hits the price acis at (0,0) and must intersect aggregate demand at a price of $5.
+
+# Low Gas Price = 21.991 - 0.0001355(Q_Low_Gallons_per_Day)
+
+(5-21.991)/-0.0001355
+
+# Supply curve intersects the low gas demand curve at (5, 125394.8). 
+
+125394.8/5
+
+# Supply curve is Price = 25078.96(Quantity of Gas)
+
+
+```
+
